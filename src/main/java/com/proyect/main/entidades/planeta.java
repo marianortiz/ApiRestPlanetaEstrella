@@ -1,4 +1,4 @@
-package com.proyect.entidades;
+package com.proyect.main.entidades;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +15,7 @@ public class planeta {
 	@Column(name = "planet_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "planet_nombre")
+	@Column(name = "planet_nombre",unique = true)
 	private String nombre;
 	@Column(name = "planet_dencidad")
 	private String dencidad;
