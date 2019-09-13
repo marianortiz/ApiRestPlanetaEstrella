@@ -42,6 +42,8 @@ public class PlanetaDTO implements Serializable {
 		this.dencidad = dencidad;
 		this.tamaño = tamaño;
 	}
+	public PlanetaDTO() {
+	}
 	
 	
 	

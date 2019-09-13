@@ -22,6 +22,16 @@ public class Planeta {
 	@Column(name = "planet_tamaño")
 	private float tamaño;
 	
+	//CONSTRUCTOR PLANETA
+	public Planeta(String nombre, String dencidad, float tamaño) {
+		this.nombre = nombre;
+		this.dencidad = dencidad;
+		this.tamaño = tamaño;
+	}
+	
+	public Planeta() {
+	}
+
 	//GETTERS AND SETTERS
 	public String getNombre() {
 		return nombre;
@@ -41,13 +51,14 @@ public class Planeta {
 	public void setTamaño(float tamaño) {
 		this.tamaño = tamaño;
 	}
-	
-	//CONSTRUCTOR PLANETA
-	public Planeta(String nombre, String dencidad, float tamaño) {
-		this.nombre = nombre;
-		this.dencidad = dencidad;
-		this.tamaño = tamaño;
+	public int getId() {
+		return id;
 	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 	
 	
 	
