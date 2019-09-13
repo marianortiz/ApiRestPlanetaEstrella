@@ -2,6 +2,9 @@ package com.proyect.main.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.sound.midi.Soundbank;
 
 import org.springframework.stereotype.Service;
 
@@ -40,33 +43,78 @@ public class PlanetaService implements ObjectService<PlanetaDTO>{
 			
 		}
 		
-		return null;
+	return result;
 	}
 
 	@Override
 	public PlanetaDTO getOne(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Optional<Planeta> aOptional = planetaRepository.findById(id);
+		
+		PlanetaDTO temp = new PlanetaDTO();
+		
+		try {
+			
+			Planeta planeta = aOptional.get();
+			
+			temp.setId(planeta.getId());
+			temp.setTamaño(planeta.getTamaño());
+			temp.setNombre(planeta.getNombre());
+			temp.setDencidad(planeta.getDencidad());
+			
+		} catch (Exception e) {
+			System.out.println("No Existe el id");
+		}
+		return temp;
 	}
 
 	@Override
 	public PlanetaDTO save(PlanetaDTO t) {
-		// TODO Auto-generated method stub
-		return null;
+		Planeta planeta = new Planeta();
+		
+		planeta.setNombre(t.getNombre());
+		planeta.setTamaño(t.getTamaño());
+		planeta.setDencidad(t.getDencidad());
+		
+		planetaRepository.save(planeta);
+		
+		t.setId(planeta.getId());
+		
+		return t;
 	}
 
 	@Override
 	public PlanetaDTO update(PlanetaDTO t, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Optional<Planeta> pOptional = planetaRepository.findById(id);
+		
+		Planeta temp = new Planeta();
+		
+		try {
+			temp = pOptional.get();
+			temp.setNombre(t.getNombre());
+			temp.setDencidad(t.getDencidad());
+			temp.setTamaño(t.getTamaño());
+			
+			planetaRepository.save(temp);
+			t.setId(temp.getId());
+			
+		} catch (Exception e) {
+			System.out.println("No Existe");
+		}
+		return t;
 	}
 
 	@Override
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			
+			planetaRepository.deleteById(id);
+			
+		} catch (Exception e) {
+		
+		}
+	return true;
 	}
 
-	
-	
 }

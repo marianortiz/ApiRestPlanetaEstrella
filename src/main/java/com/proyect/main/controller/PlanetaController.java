@@ -5,7 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,28 +37,47 @@ public class PlanetaController implements ObjectController<PlanetaDTO>{
 	}
 
 	@Override
-	public PlanetaDTO getOner(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	@GetMapping("/{id}")
+	public PlanetaDTO getOner(@PathVariable int id) {
+		return ResponseEntity.status(200).body(planetaService.getOne(id)).getBody();
 	}
 
 	@Override
-	public ResponseEntity save(PlanetaDTO t) {
-		// TODO Auto-generated method stub
-		return null;
+	@PostMapping("/")
+	public ResponseEntity save(@RequestBody PlanetaDTO t) {
+		
+		PlanetaDTO temp = planetaService.save(t);
+		
+		if(temp.getId() != 0 ) {
+			return ResponseEntity.status(201).body(temp);
+		}else {
+		
+		return ResponseEntity.status(400).body("{'error': 'bad request'}");
+		}
 	}
 
-	@Override
-	public ResponseEntity update(PlanetaDTO t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity delete(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
+	
+	@Override
+	@PutMapping("/{id}")
+	public ResponseEntity update(@RequestBody PlanetaDTO t, @PathVariable int id) {
+		
+		return ResponseEntity.status(201).body(planetaService.update(t, id));
+		
+	}
+		
+	
+	@Override
+	@DeleteMapping("/{id}")
+	public ResponseEntity delete(@PathVariable int id) {
+		
+		boolean det = planetaService.delete(id);
+		
+		if(det) {
+			return  ResponseEntity.status(204).body("'Message': 'Eliminacion Exitosa'");
+		}else {
+			return ResponseEntity.status(400).body("'Message': 'Eliminacion sin Exito'");
+			}
+		}
 	
 }
