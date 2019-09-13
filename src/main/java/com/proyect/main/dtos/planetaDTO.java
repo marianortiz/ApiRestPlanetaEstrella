@@ -2,7 +2,7 @@ package com.proyect.main.dtos;
 
 import java.io.Serializable;
 
-public class planetaDTO implements Serializable {
+public class PlanetaDTO implements Serializable {
 
 	private int id;
 	private String nombre;
@@ -37,7 +37,7 @@ public class planetaDTO implements Serializable {
 	}
 	
 	//CONSTRUNCTOR PLANETADTO
-	public planetaDTO(String nombre, String dencidad, float tamaño) {
+	public PlanetaDTO(String nombre, String dencidad, float tamaño) {
 		this.nombre = nombre;
 		this.dencidad = dencidad;
 		this.tamaño = tamaño;

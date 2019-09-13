@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "planetaestrella_planeta") 
-public class planeta {
+public class Planeta {
 	
 	@Id
 	@Column(name = "planet_id")
@@ -43,7 +43,7 @@ public class planeta {
 	}
 	
 	//CONSTRUCTOR PLANETA
-	public planeta(String nombre, String dencidad, float tamaño) {
+	public Planeta(String nombre, String dencidad, float tamaño) {
 		this.nombre = nombre;
 		this.dencidad = dencidad;
 		this.tamaño = tamaño;
