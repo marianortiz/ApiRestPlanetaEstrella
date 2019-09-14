@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,15 +14,23 @@ import javax.persistence.Table;
 public class Planeta {
 	
 	@Id
-	@Column(name = "planet_id")
+	@Column(name = "planeta_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(name = "planet_nombre",unique = true)
 	private String nombre;
+	
 	@Column(name = "planet_dencidad")
 	private String dencidad;
+	
 	@Column(name = "planet_tamaño")
 	private float tamaño;
+	
+	@ManyToOne
+	@JoinColumn(name = "planeta_fk_estrella")
+	private Estrella estrella;
+	
 	
 	//CONSTRUCTOR PLANETA
 	public Planeta(String nombre, String dencidad, float tamaño) {
