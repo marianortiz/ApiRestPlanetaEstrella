@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyect.main.dtos.PlanetaDTO;
+import com.proyect.main.exceptions.StatusException;
 import com.proyect.main.services.PlanetaService;
 
 @Controller
@@ -27,7 +28,9 @@ public class PlanetaController implements ObjectController<PlanetaDTO>{
 	public PlanetaController(PlanetaService planetaService) {
 		this.planetaService = planetaService;
 	}
-
+		
+	
+					//getALL
 	@Override
 	@CrossOrigin("*")
 	@GetMapping(path = "/")
@@ -35,49 +38,109 @@ public class PlanetaController implements ObjectController<PlanetaDTO>{
 		
 		return ResponseEntity.status(200).body(planetaService.getAll()).getBody();
 	}
-
+	
+	
+					//getOne
 	@Override
 	@GetMapping("/{id}")
 	public PlanetaDTO getOner(@PathVariable int id) {
 		return ResponseEntity.status(200).body(planetaService.getOne(id)).getBody();
 	}
-
+	
+	
+					//save
 	@Override
 	@PostMapping("/")
 	public ResponseEntity save(@RequestBody PlanetaDTO t) {
 		
 		PlanetaDTO temp = planetaService.save(t);
+		try {
+			
+			if(temp.getId() != 0 ) {
+			
+				return ResponseEntity.status(201).body(temp);
+			
+			}else {
+			
+			throw new StatusException("Nombre ya existente", 400);
+			
+			}	
+		} catch (StatusException e) {
+			
+			return e.getResponseStatus();
 		
-		if(temp.getId() != 0 ) {
-			return ResponseEntity.status(201).body(temp);
-		}else {
-		
-		return ResponseEntity.status(400).body("{'error': 'bad request'}");
 		}
+		
 	}
 
 	
-	
+					//update
 	@Override
 	@PutMapping("/{id}")
 	public ResponseEntity update(@RequestBody PlanetaDTO t, @PathVariable int id) {
 		
-		return ResponseEntity.status(201).body(planetaService.update(t, id));
+		PlanetaDTO temp = planetaService.update(t, id);
 		
+		try {
+			if(temp.getId() != 0 ) {
+				return ResponseEntity.status(201).body(temp);
+			}else {
+				throw new StatusException("Solicitud Incorrecta", 400);
+			}
+		
+		} catch (StatusException e) {
+			
+			return e.getResponseStatus();
+		
+		}
 	}
-		
 	
+	
+					//delete
 	@Override
 	@DeleteMapping("/{id}")
 	public ResponseEntity delete(@PathVariable int id) {
 		
 		boolean det = planetaService.delete(id);
 		
-		if(det) {
-			return  ResponseEntity.status(204).body("'Message': 'Eliminacion Exitosa'");
-		}else {
-			return ResponseEntity.status(400).body("'Message': 'Eliminacion sin Exito'");
+		try {
+			if(det) {
+				return  ResponseEntity.status(200).body("{\"Eliminacion Existosa\" : \"Removido Coreectamente.\" }");
+			}else {
+				
+				throw new StatusException("Solicitud Incorrecta", 400);
 			}
+		
+		} catch (StatusException e) {
+			
+			return e.getResponseStatus();
+			
 		}
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

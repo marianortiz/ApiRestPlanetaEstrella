@@ -25,7 +25,7 @@ public class PlanetaService implements ObjectService<PlanetaDTO>{
 	}
 
 	
-	
+					//getAll
 	@Override
 	public List<PlanetaDTO> getAll() {
 		
@@ -38,14 +38,13 @@ public class PlanetaService implements ObjectService<PlanetaDTO>{
 			temp.setTamaño(planeta.getTamaño());
 			result.add(temp);
 			
-			
-			
-			
 		}
 		
 	return result;
 	}
-
+	
+	
+					//getOne
 	@Override
 	public PlanetaDTO getOne(int id) {
 		
@@ -68,6 +67,8 @@ public class PlanetaService implements ObjectService<PlanetaDTO>{
 		return temp;
 	}
 
+	
+					//save
 	@Override
 	public PlanetaDTO save(PlanetaDTO t) {
 		Planeta planeta = new Planeta();
@@ -76,13 +77,23 @@ public class PlanetaService implements ObjectService<PlanetaDTO>{
 		planeta.setTamaño(t.getTamaño());
 		planeta.setDencidad(t.getDencidad());
 		
-		planetaRepository.save(planeta);
+		try {
+			
+			planetaRepository.save(planeta);
+				
+			
+		} catch (Exception e) {
 		
+			System.out.println("Bad Request");
+		
+		}
 		t.setId(planeta.getId());
 		
 		return t;
 	}
 
+	
+					//update
 	@Override
 	public PlanetaDTO update(PlanetaDTO t, int id) {
 		
@@ -100,11 +111,15 @@ public class PlanetaService implements ObjectService<PlanetaDTO>{
 			t.setId(temp.getId());
 			
 		} catch (Exception e) {
-			System.out.println("No Existe");
+			System.out.println("Bad Request");
+			t.setId(0);
 		}
+		
 		return t;
 	}
 
+	
+					//delete
 	@Override
 	public boolean delete(int id) {
 		try {
